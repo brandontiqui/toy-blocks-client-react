@@ -19,6 +19,18 @@ export class Nodes extends React.Component {
     this.props.actions.checkNodeStatuses(this.props.nodes.list);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.expandedNodeURL !== this.state.expandedNodeURL) {
+      this.getBlocksForNodeUrl(this.state.expandedNodeURL);
+    }
+  };
+
+  getBlocksForNodeUrl(nodeUrl) {
+    if (!nodeUrl) return;
+
+    this.props.actions.getBlocksForNodeUrl(nodeUrl);
+  }
+
   toggleNodeExpanded(node) {
     this.setState({
       expandedNodeURL:

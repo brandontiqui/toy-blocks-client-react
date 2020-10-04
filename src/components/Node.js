@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import colors from "../constants/colors";
 import Status from "./Status";
+import {padLeadingZeroes} from "../utils/numberFormat";
 
 const Node = ({ node, expanded, toggleNodeExpanded }) => {
   const classes = useStyles();
@@ -46,7 +47,21 @@ const Node = ({ node, expanded, toggleNodeExpanded }) => {
         </Box>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <Typography>Blocks go here</Typography>
+        <Typography>
+          <div className={classes.parentContainer}>
+          {node.online && Array.isArray(node.blocks) === false && (<p>Loading blocks...</p>)}
+          {
+            node.online && Array.isArray(node.blocks) && (node.blocks.map(b => (
+              <div className={classes.card}>
+                  <span className={classes.cardHeading}>{padLeadingZeroes(b.id)}</span>
+                <p>{b.attributes.data}</p>
+              </div>
+            )))
+          }
+          {node.online && Array.isArray(node.blocks) && !node.blocks.length && (<p>Node returned 0 blocks.</p>)}
+          {node.online === false && (<p>Node is offline</p>)}
+          </div>
+        </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
@@ -96,6 +111,23 @@ const useStyles = makeStyles((theme) => ({
     color: colors.faded,
     lineHeight: 2,
   },
+  cardHeading: {
+    fontSize: theme.typography.pxToRem(14),
+    color: '#384FFE'
+  },
+  card: {
+    backgroundColor: '#E0E0E0',
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 5,
+    left: 0,
+    right: 0
+  },
+  parentContainer: {
+    position: 'relative',
+    width: 600
+  }
 }));
 
 Node.propTypes = {

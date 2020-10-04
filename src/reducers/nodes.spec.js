@@ -20,6 +20,12 @@ describe('Reducers::Nodes', () => {
     name: null
   };
 
+  const nodeC = {
+    url: 'https://thawing-springs-53971.herokuapp.com',
+    online: true,
+    name: 'Thawing Springs'
+  };
+
   it('should set initial state by default', () => {
     const action = { type: 'unknown' };
     const expected = getInitialState();
@@ -87,6 +93,24 @@ describe('Reducers::Nodes', () => {
           loading: false
         },
         nodeB
+      ]
+    };
+
+    expect(reducer(appState, action)).toEqual(expected);
+  });
+
+  it('should handle GET_BLOCKS_FOR_NODE', () => {
+    const appState = {
+      list: [nodeC]
+    };
+    const action = { type: ActionTypes.GET_BLOCKS_FOR_NODE, node: nodeC };
+    const expected = {
+      list: [
+        {
+          ...nodeC,
+          online: true,
+          name: 'Thawing Springs'
+        }
       ]
     };
 

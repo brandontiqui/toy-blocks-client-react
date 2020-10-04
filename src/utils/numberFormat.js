@@ -51,3 +51,13 @@ export function isInt(n) {
 export function scrubFormatting(value) {
   return value.toString().replace('$', '').replace(',', '').replace('.', '');
 }
+
+export function padLeadingZeroes(value) {
+  let leadingZeroes = '';
+  if (value < 10) {
+    leadingZeroes = '00';
+  } else if (value < 100) {
+    leadingZeroes = '0';
+  }
+  return `${leadingZeroes}${value}`;
+}

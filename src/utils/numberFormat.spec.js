@@ -1,4 +1,4 @@
-import {getCurrencyFormattedNumber, isInt, scrubFormatting, getFormattedNumber} from './numberFormat';
+import {getCurrencyFormattedNumber, isInt, scrubFormatting, getFormattedNumber, padLeadingZeroes} from './numberFormat';
 
 describe('Number Formatter', () => {
   describe('getCurrencyFormattedNumber', () => {
@@ -34,6 +34,20 @@ describe('Number Formatter', () => {
 
     it('returns empty string if passed empty string', () => {
       expect(getFormattedNumber('')).toEqual('');
+    });
+  });
+
+  describe('padLeadingZeroes', () => {
+    it('returns 009 if passed 9', () => {
+      expect(padLeadingZeroes(9)).toEqual('009');
+    });
+
+    it('returns 099 if passed 99', () => {
+      expect(padLeadingZeroes(99)).toEqual('099');
+    });
+
+    it('returns 101 if passed 101', () => {
+      expect(padLeadingZeroes(101)).toEqual('101');
     });
   });
 });
